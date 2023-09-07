@@ -1,0 +1,2054 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: BachelorApp API
+  description: BachelorApp is Home management Softwere.
+  contact:
+    name: Aymon
+    url: https://mdaymon.epizy.com
+    email: mdaiman2016@gmail.com
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/KD_programers/BachelorApi/1.0.0
+  - description: Local host Api
+    url: http://localhost:8000
+tags: 
+  - name: Auth
+    description: Authentication Endpoint
+  - name: Admin Auth
+    description:  First time signup for Admin
+  - name: Token
+    description:  Token Endpoint
+  - name: Members
+    description: Members Endpoint
+  - name: Meals
+    description: Meals endpoint
+  - name: Account
+    description: Account deposite Endpoint
+  - name: Products
+    description:  Products Endpoint
+  - name: Notice
+    description: Notice Endpoint
+  - name: Reports
+    description: Monthly Reports Endpoint
+security:
+  - ApiKeyAuth: []
+paths:
+  '/signup':
+    post:
+      description: create a new member
+      tags: [Auth]
+      requestBody:
+        content:
+          'aplication/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: mohammdad aymon
+                email:
+                  type: object
+                  example: mdaiman2016@gmail.com
+                password:
+                  type: object
+                  example: password123
+              required: [name,email,password]
+      responses:
+        '201':
+          description: signup successfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: singup successfull
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: member_id1111
+                      name:
+                        type: string
+                        example: aymon
+                      email:
+                        type: string
+                        example: mdaiman201@gmail.com
+                      role:
+                        type: string
+                        example: Member
+                      token_data:
+                        type: object
+                        properties:
+                          access_token:
+                            type: string
+                            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ"
+                          refresh_token:
+                            type: string
+                            example: "eyJKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                            example: '/auth/signup'
+                          signin:
+                            type: string
+                            example: '/auth/signin'
+        "400":
+          $ref: '#/components/responses/400'
+        "401":
+          $ref: '#/components/responses/401'
+        "403":
+          $ref: '#/components/responses/403'
+        "500":
+          $ref: '#/components/responses/500'
+  '/signin':
+    post:
+      description:  Signin to existing member
+      tags: [Auth]
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: mohammdad aymon
+                email:
+                  type: object
+                  example: mdaiman2016@gmail.com
+              required: [name,email]
+      responses:
+        '200':
+          description: signin successfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: singin successful
+                  token_data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ"
+                      refresh_token:
+                        type: string
+                        example: "eyJKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/auth/sigin'
+                      report:
+                        type: string
+                        example: '/monthly_reports/members/:member_id'
+        '400':
+          $ref: '#/components/responses/400'
+        "500":
+          $ref: '#/components/responses/500'
+  '/signout':
+    post:
+      description:  Signout to existing account
+      tags: [Auth]
+      responses:
+        '200':
+          description:  Signout successfull
+          content:
+            'application/josn':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: singout successfull
+        '401':
+          $ref: '#/components/responses/401'
+        "404":
+          $ref: '#/components/responses/404'
+        "500":
+          $ref: '#/components/responses/500'
+  '/auth/signup':
+    post:
+      description: create a new member
+      tags: [Admin Auth]
+      requestBody:
+        content:
+          'aplication/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: mohammdad aymon
+                email:
+                  type: object
+                  example: mdaiman2016@gmail.com
+                password:
+                  type: object
+                  example: password123
+              required: [name,email,password]
+      responses:
+        '201':
+          description: signup successfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: singup successfull
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: member_id1111
+                      name:
+                        type: string
+                        example: aymon
+                      email:
+                        type: string
+                        example: mdaiman201@gmail.com
+                      role:
+                        type: string
+                        example: Member
+                      token_data:
+                        type: object
+                        properties:
+                          access_token:
+                            type: string
+                            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ"
+                          refresh_token:
+                            type: string
+                            example: "eyJKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                            example: '/auth/signup'
+                          signin:
+                            type: string
+                            example: '/auth/signin'
+        "400":
+          $ref: '#/components/responses/400'
+        "401":
+          $ref: '#/components/responses/401'
+        "403":
+          $ref: '#/components/responses/403'
+        "500":
+          $ref: '#/components/responses/500'
+  '/refresh_token':
+    post:
+      description:  Create access token
+      tags: [Token]
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  example:  "i8eurue48dshiofud89ufewr"
+      responses:
+        '200':
+          description:  Token generated sucessfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example:  Access token generated
+                  token_data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        example: "eyJhbGciOiJIUzCI6IkpXVCJ"
+                      refresh_token:
+                        type: string
+                        example: "eyJKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                  links:
+                    type: object
+                    properties:
+                      signin:
+                        type: string
+                        example: '/auth/signin'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+           $ref: '#/components/responses/404'
+  '/members':
+    get:
+      description:  Get all members
+      tags: [Members]
+      parameters:
+        - $ref: '#/components/parameters/pagePram'
+        - $ref: '#/components/parameters/limitPram'
+        - $ref: '#/components/parameters/sortTypeParam'
+        - $ref: '#/components/parameters/sortByParam'
+        - $ref: '#/components/parameters/searchParam'
+        
+      responses:
+        '200':
+          description:  Get All Members
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Members retrieved successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example:  memeber233
+                        name:
+                          type: string
+                          example:  aymon
+                        email:
+                          type: string
+                          example:   mdaiman2@gmail.com
+                        role:
+                          type: string
+                          example:  member
+                        timestamp:
+                          $ref: '#/components/schemas/Timestamp'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/members'
+                      next_page:
+                        type: string
+                        example: '/members?next_page=3'
+                      prev_page:
+                        type: string
+                        example: '/members?prev_pag=2'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  '/members/{member_id}':
+    get:
+      description:  Get a single member
+      tags: [Members]
+      parameters:
+        - in: path
+          name: member_id
+          required: true
+          description: The ID of the member to retrieve.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description:  Get single Members
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example:  Member retrieved successfully
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  memeber233
+                      name:
+                        type: string
+                        example:  aymon
+                      email:
+                        type: string
+                        example:   mdaiman2@gmail.com
+                      role:
+                        type: string
+                        example:  member
+                      timestamp:
+                        $ref: '#/components/schemas/Timestamp'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    patch:
+      description:  Update a single member
+      tags: [Members]
+      parameters:
+        - in: path
+          name: member_id
+          required: true
+          description: The ID of the member to retrieve.
+          schema:
+            type: integer
+      requestBody:
+        content:
+          'aplication/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: mohammdad aymon
+                email:
+                  type: object
+                  example: mdaiman2016@gmail.com
+              required: [name,email]
+      responses:
+        '200':
+          description:  Update a single member
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example:  Member updated successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example:  memeber233
+                        name:
+                          type: string
+                          example:  aymon
+                        email:
+                          type: string
+                          example:   mdaiman2@gmail.com
+                        role:
+                          type: string
+                          example:  member
+                        timestamp:
+                          $ref: '#/components/schemas/Timestamp'
+        '404':
+          $ref: '#/components/responses/404'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'      
+    delete:
+      description:  Delete a member
+      tags: [Members]
+      parameters:
+        - in: path
+          name: member_id
+          required: true
+          description: The ID of the member to retrieve.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Delete sucessfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  204
+                  message:
+                    type: string
+                    example: Member deleted successfull.
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  '/members/{member_id}/password':
+    patch:
+      description: Change password
+      tags: [Members]
+      parameters:
+        - in: path
+          name: member_id
+          required: true
+          description: The ID of the member to change password.
+          schema:
+            type: integer
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: 34049kij
+      responses:
+        '200':
+          description:  Changed password
+          content:
+            'application/josn':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  200
+                  message:
+                    type: string
+                    example:  Password changed successfull
+        '404':
+          $ref: '#/components/responses/404'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+  '/accounts/{member_id}/deposite':
+    patch:
+      description: Deposite money in member account
+      tags: [Account]
+      parameters:
+        - in: path
+          name: member_id
+          required: true
+          description: The ID of the member to a account.
+          schema:
+            type: integer
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  example: 2000
+      responses:
+        '201':
+          description:  Money deposite in account
+          content:
+            'application/josn':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  201
+                  message:
+                    type: string
+                    example:  Deposite successfull
+                  member_id:
+                    type: string
+                    example:  membrid234
+                  data:
+                    type: object
+                    properties:
+                      total_deposite:
+                        type: integer
+                        format: int32
+                        example:  2000
+                      deposite_amount:
+                        type: integer
+                        format: int32
+                        example:  200
+                  links:
+                    type: object
+                    properties:
+                      self: 
+                        type: string
+                        example: '/accounts/:member_id'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  '/accounts/{member_id}':
+    patch:
+      description: Get details of a member
+      tags: [Account]
+      parameters:
+        - in: path
+          name: member_id
+          required: true
+          description: The ID of the member to a account.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Account retrived sucessfull
+          content:
+            'application/josn':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  200
+                  message:
+                    type: string
+                    example: Account retrived sucessfull
+                  member_id:
+                    type: string
+                    example:  membrid234
+                  total_deposite:
+                    type: integer
+                    format: int32
+                    example:  40005
+                  links:
+                    type: object
+                    properties:
+                      self: 
+                        type: string
+                        example: '/accounts/:member_id'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+  '/meals':
+    post:
+      description:  Create a single mel
+      tags: [Meals]
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                member_id:
+                  type: string
+                  example:  member_id23
+                date: 
+                  type: string
+                  example:  4-5-2000
+                type:
+                  type: string
+                  example:  breakfast
+                price:  
+                  type: number
+                  example:  50
+                description:  
+                  type: string
+                  example:  this a description about this meals
+              required: [member_id,type,price]
+      responses:
+        '201':
+          description: Create meals successfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: Create meals successfull
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  i3943
+                      member_id:
+                        type: string
+                        example:  member_id234
+                      date: 
+                        type: string
+                        example:  34-3-2000
+                      type:
+                        type: string
+                        example:  breakfast
+                      price:  
+                        type: number
+                        example:  50
+                      description:  
+                        type: string
+                        example:  this a description about this meals
+                      timestamp:
+                        $ref:  '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/meals'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    get:
+      description:  Get all meals
+      tags: [Meals]
+      parameters:
+        - $ref: '#/components/parameters/pagePram'
+        - $ref: '#/components/parameters/limitPram'
+        - $ref: '#/components/parameters/sortTypeParam'
+        - $ref: '#/components/parameters/sortByParam'
+        - $ref: '#/components/parameters/searchParam'
+      responses:
+        '200':
+          description:  Get all meals
+          content:
+            'applicatin/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Meals retrieved successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example:  40d9343w
+                        member_id:
+                          type: string
+                          example:  member_id343
+                        date:
+                          type: string
+                          example: 2-2-2000
+                        type:
+                          type: string
+                          example:  breakfast
+                        price:
+                          type: number
+                          example:  50
+                        description:
+                          type: string
+                          example:  meals description here
+                        timestamp:
+                          $ref: '#/components/schemas/Timestamp'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/meals'
+                      next_page:
+                        type: string
+                        example: '/meals?next_page=3'
+                      prev_page:
+                        type: string
+                        example: '/meals?prev_pag=2'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  '/meals/{id}':
+    patch:
+      description:  Update a single meal
+      tags: [Meals]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the meals to retrieve.
+          schema:
+            type: integer
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  example:  breakfast
+                price:  
+                  type: number
+                  example:  50
+                description:  
+                  type: string
+                  example:  this a description about this meals
+              required: [member_id,type,price]    
+      responses:
+        '201':
+          description: Update a single meals successfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: Update meal successfull
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  i3943
+                      member_id:
+                        type: string
+                        example:  member_id234
+                      date: 
+                        type: string
+                        example:  34-3-2000
+                      type:
+                        type: string
+                        example:  breakfast
+                      price:  
+                        type: number
+                        example:  50
+                      description:  
+                        type: string
+                        example:  this a description about this meals
+                      timestamp:
+                        $ref:  '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/meals'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    delete:
+      description:  Delete a single meal
+      tags: [Meals]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the meals to retrieve.
+          schema:
+            type: integer 
+      responses:
+        '204':
+          description: Delete sucessfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  204
+                  message:
+                    type: string
+                    example: Meal deleted successfull.  
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    get:
+      description:  Get a single meal
+      tags: [Meals]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the meal to retrieve.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description:  Get single meals
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example:  Meal retrieved successfully
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  memeber233
+                      member_id:
+                        type: string
+                        example:  membrid34
+                      date:
+                        type: string
+                        example:  3-3-200
+                      type:
+                        type: string
+                        example:  'breakfast'
+                      price:
+                        type: string
+                        example:  50
+                      description:
+                        type: string
+                        example:  this is a description of a meal
+                      timestamp:
+                        $ref: '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example:  '/meals/:id'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  '/meals/{member_id}':
+     get:
+      description:  Get all meals of the given member_id
+      tags: [Meals]
+      parameters:
+        - in: path
+          name: member_id
+          required: true
+          description: The ID of the member to retrieve meals.
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/pagePram'
+        - $ref: '#/components/parameters/limitPram'
+        - $ref: '#/components/parameters/sortTypeParam'
+        - $ref: '#/components/parameters/sortByParam'
+        - $ref: '#/components/parameters/searchParam'
+      responses:
+        '200':
+          description:  Get all meals of given member_id
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example:  meals retrieved successfully
+                  member_id:
+                    type: string
+                    example:  member_id343
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example:  40d9343w
+                        date:
+                          type: string
+                          example: 2-2-2000
+                        type:
+                          type: string
+                          example:  breakfast
+                        price:
+                          type: number
+                          example:  50
+                        description:
+                          type: string
+                          example:  meals description here
+                        timestamp:
+                          $ref: '#/components/schemas/Timestamp'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/meals/{member_id}'
+                      next_page:
+                        type: string
+                        example: '/meals/{member_id}?next_page=3'
+                      prev_page:
+                        type: string
+                        example: '/meals/{member_id}?prev_pag=2'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+  '/products':
+    post:
+      description: Create a single product
+      tags: [Products]
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example:  rice
+                price:
+                  type: string
+                  example:  2000
+                description:
+                  type: string
+                  example:  this is a products description
+              required: [name,price]
+      responses:
+        '201':
+          description: add a single product successfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: Add a single product successfull
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  i3943
+                      name:
+                        type: string
+                        example:  rice
+                      price:
+                        type: string
+                        example:  2000
+                      description:
+                        type: string
+                        example:  this is a products description
+                      timestamp:
+                        $ref:  '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/products'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    get:
+      description:  Get all products
+      tags: [Products]
+      parameters:
+        - $ref: '#/components/parameters/pagePram'
+        - $ref: '#/components/parameters/limitPram'
+        - $ref: '#/components/parameters/sortTypeParam'
+        - $ref: '#/components/parameters/sortByParam'
+        - $ref: '#/components/parameters/searchParam'
+      responses:
+        '200':
+          description:  Get all products
+          content:
+            'applicatin/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Products retrieved successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example:  i3943
+                        name:
+                          type: string
+                          example:  rice
+                        price:
+                          type: string
+                          example:  2000
+                        description:
+                          type: string
+                          example:  this is a products description
+                        timestamp:
+                          $ref: '#/components/schemas/Timestamp'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/products'
+                      next_page:
+                        type: string
+                        example: '/products?next_page=3'
+                      prev_page:
+                        type: string
+                        example: '/products?prev_pag=2'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  '/products/{id}':
+    get:
+      description:  Get a single product
+      tags: [Products]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the products to retrieve product.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description:  Get single product
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example:  Product retrieved successfully
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  i3943
+                      name:
+                        type: string
+                        example:  rice
+                      price:
+                        type: string
+                        example:  2000
+                      description:
+                        type: string
+                        example:  this is a products description
+                      timestamp:
+                        $ref: '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example:  '/product/:id'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    patch:
+      description:  Update a single product
+      tags: [Products]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the products to retrieve product.
+          schema:
+            type: integer
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example:  rice
+                price:  
+                  type: number
+                  example:  500
+                description:  
+                  type: string
+                  example:  this a description about this products
+      responses:
+        '201':
+          description: Update a single product successfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: Update product successfull
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  i3943
+                      name:
+                        type: string
+                        example:  Rice
+                      price:  
+                        type: number
+                        example:  50
+                      description:  
+                        type: string
+                        example:  this a description about this product
+                      timestamp:
+                        $ref:  '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/products/{id}'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403' 
+    delete:
+      description:  Delete a single product
+      tags: [Products]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the products to retrieve product.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Delete sucessfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  204
+                  message:
+                    type: string
+                    example: Product deleted successfull.  
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403' 
+  '/notices':
+    post:
+      description: Create a single notice
+      tags: [Notice]
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example:  344i4ufjd
+                title:
+                  type: string
+                  example:  Gas bying notice
+                body:
+                  type: string
+                  example:  this is a notice body
+              required: [title,body]
+      responses:
+        '201':
+          description: Announched a Notice
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: Notice announched successfull
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  i3943
+                      title:
+                        type: string
+                        example:  Gas bying notice
+                      body:
+                        type: string
+                        example:  this is a notice body
+                      timestamp:
+                        $ref:  '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/notices/{id}'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+    get:
+      description:  Get all notices
+      tags: [Notice]
+      parameters:
+        - $ref: '#/components/parameters/pagePram'
+        - $ref: '#/components/parameters/limitPram'
+        - $ref: '#/components/parameters/sortTypeParam'
+        - $ref: '#/components/parameters/sortByParam'
+        - $ref: '#/components/parameters/searchParam'
+      responses:
+        '200':
+          description:  Get all notices
+          content:
+            'applicatin/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Notices retrieved successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example:  344i4ufjd
+                        title:
+                          type: string
+                          example:  Gas bying notice
+                        body:
+                          type: string
+                          example:  this is a notice body
+                        timestamp:
+                          $ref: '#/components/schemas/Timestamp'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/notices'
+                      next_page:
+                        type: string
+                        example: '/notices?next_page=3'
+                      prev_page:
+                        type: string
+                        example: '/notices?prev_pag=2'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/notices/{id}':
+    get:
+      description:  Get a single notice
+      tags: [Notice]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the noticess to retrieve notice.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description:  Get single Notice
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example:  Notice retrieved successfully
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  i3943
+                      title:
+                        type: string
+                        example:  Gas finished
+                      body:
+                        type: string
+                        example:  this is a notice description
+                      timestamp:
+                        $ref: '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example:  '/notices/:id'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      description:  Update a single Notice
+      tags: [Notice]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the notice to retrieve notice.
+          schema:
+            type: integer
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example:  rice
+                body:  
+                  type: string
+                  example:  this a body about this notice
+      responses:
+        '201':
+          description: Update a single notice successfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 201
+                  message:
+                    type: string
+                    example: Update notice successfull
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  i3943
+                      title:
+                        type: string
+                        example:  Gas is finished
+                      body:  
+                        type: string
+                        example:  this a body about this notice
+                      timestamp:
+                        $ref:  '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/notices/{id}'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403' 
+    delete:
+      description:  Delete a single notice
+      tags: [Notice]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the notices to retrieve notice.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Delete sucessfull
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  204
+                  message:
+                    type: string
+                    example: Notice deleted successfull.  
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403' 
+  '/monthly_reports/members':
+    get:
+      description:  Get monthly report of all member
+      tags: [Reports]
+      parameters:
+        - $ref: '#/components/parameters/pagePram'
+        - $ref: '#/components/parameters/limitPram'
+        - $ref: '#/components/parameters/sortTypeParam'
+        - $ref: '#/components/parameters/sortByParam'
+        - $ref: '#/components/parameters/Month'
+        
+      responses:
+        '200':
+          description:  Get reports of all members
+          content:
+            'applicatin/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Reports retrieved successfully
+                  month:
+                    type: integer
+                    format: int32
+                    example:  2
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example:  i3943
+                        name:
+                          type: string
+                          example:  aymon
+                        email:
+                          type: string
+                          example:  mdaiman2015@gamil.com
+                        meal_summary:
+                          type: object
+                          properties:
+                            meals_consumed:
+                              type: number
+                              example:  50
+                            meals_cost:
+                              type: number
+                              example:  2500
+                        account_summary:
+                          type: object
+                          properties:
+                            total_cost:
+                              type: number
+                              example:  5000
+                            due:
+                              type: number
+                              example:  2500
+                            return:
+                              type: number
+                              example: 2500
+                        links:
+                          type: object
+                          properties:
+                            all_meals:
+                              type: string
+                              example:  '/meals/{member_id}'
+                            self_report:
+                              type: string
+                              example:  '/reports/members/{member_id}'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        example: '/products'
+                      next_page:
+                        type: string
+                        example: '/products?next_page=3'
+                      prev_page:
+                        type: string
+                        example: '/products?prev_pag=2'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/monthly_reports/members/{member_id}':
+    get:
+      description:  Get monthly report of all member
+      tags: [Reports]
+      parameters:
+        - in: path
+          name: member_id
+          required: true
+          description: The id of the notices to retrieve notice.
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/Month'
+        
+      responses:
+        '200':
+          description:  Get reports of a single member
+          content:
+            'applicatin/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Report retrieved successfully
+                  month:
+                    type: integer
+                    format: int32
+                    example:  2
+                  member_data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  i3943
+                      name:
+                        type: string
+                        example:  aymon
+                      email:
+                        type: string
+                        example:  mdaiman2015@gamil.com
+                  meal_summary:
+                    type: object
+                    properties:
+                      meals_consumed:
+                        type: number
+                        example:  50
+                      breakfast:
+                        type: number
+                        example: 25
+                      lunch:
+                        type: number
+                        example:  24
+                      diner:
+                        type: number
+                        example:  50
+                      meals_cost:
+                        type: number
+                        example:  2500
+                  account_summary:
+                    type: object
+                    properties:
+                      total_deposit:
+                        type: number
+                        example:  5000
+                      total_cost:
+                        type: number
+                        example:  5000
+                      due:
+                        type: number
+                        example:  2500
+                      return:
+                        type: number
+                        example: 2500
+                  links:
+                    type: object
+                    properties:
+                      all_meals:
+                        type: string
+                        example:  '/meals/{member_id}'
+                      self_report:
+                        type: string
+                        example:  '/reports/members/{member_id}'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/monthly_reports':
+    get:
+      description:  Get monthly report of a hole month
+      tags: [Reports]
+      parameters:
+        - $ref: '#/components/parameters/Month'
+        
+      responses:
+        '200':
+          description:  Get reports of a hole month
+          content:
+            'applicatin/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: Monthly report retrieved successfully
+                  title:
+                    type: string
+                    example: this is a february full reports
+                  month:
+                    type: integer
+                    format: int32
+                    example:  2
+                  total_meals_consumed:
+                    type: integer
+                    format: int32
+                    example:  250
+                  total_cost_across_all_member:
+                    type: integer
+                    format: int32
+                    example:  50000
+                  total_profit:
+                    type: integer
+                    format: int32
+                    example:   2500
+                  total_loss:
+                    type: integer
+                    format: int32
+                    example:  2500
+                  links:
+                    type: object
+                    properties:
+                      all_members:
+                        type: string
+                        example:  '/reports/members'
+                      all_products:
+                        type: string
+                        example:  '/products'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      
+      
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+  responses:
+    "500":
+          description: Internal Server error
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 500
+                  error:
+                    type: string
+                    example: internal server error
+                  message:
+                    type: string
+                    example: we are sorry for the inconvenience.
+    "400":
+          description: 'Bad Request'
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 400
+                  error:
+                    type: string
+                    example: Bad Request
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        field: 
+                          type: string
+                          example: email
+                        message:
+                          type: string
+                          example: Invalid email
+                        in:
+                          type: string
+                          enum: [query, body]
+                          example: body
+    "401":
+          description: Authentication Errors
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  401
+                  error:
+                    type: string
+                    example: Authentication failed
+                  message:
+                    type: string
+                    example: Please provide valid credentials to access this resource.
+    "403":
+          description: Authorization Errors
+          content:
+            'application/josn':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example: 403
+                  error:
+                    type: string
+                    example: Access denied
+                  message:
+                    type: string
+                    example: You do not have permission to access this resource
+    "404":
+      description: Resource not found
+      content:
+        'application/josn':
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+                example: 404
+              error:
+                type: string
+                example: Resource not found
+              message:
+                type: string
+                example: Resourch Not Found
+  schemas:
+    Pagination:
+        type: object
+        properties:
+          page:
+            type: integer
+            format: int32
+            example: 2
+          limit:
+            type: integer
+            format: int32
+            example: 10
+          next_page:
+            type: integer
+            format: int32
+            example: 3
+          prev_page:
+            type: integer
+            format: int32
+            example: 1
+          total_page:
+            type: integer
+            format: int32
+            example: 5
+          total_items:
+            type: integer
+            format: int32
+            example: 50
+        required:
+          - page
+          - limit
+          - totalPage
+          - totalItems
+    Timestamp:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [createdAt, updatedAt]
+  parameters:
+    pagePram:
+      in: query
+      name: page
+      description: current page number
+      schema:
+        type: integer
+        format: int32
+        example: 2
+    limitPram:
+      in: query
+      name: limit
+      description: maximum items to be returned
+      schema:
+        type: integer
+        format: int32
+        example: 10
+    sortTypeParam:
+      in: query
+      name: sort_type
+      description: type of sort (asc or dsc)
+      schema:
+        type: string
+        enum: [asc, dsc]
+        example: dsc
+    sortByParam:
+      in: query
+      name: sort_by
+      description: Sort key
+      schema:
+        type: string
+        example: updatedAt
+    searchParam:
+      in: query
+      name: search
+      description: Search term
+      schema:
+        type: string
+        example: search
+    Month:
+      in: query
+      name: month
+      description: current month
+      schema:
+        type: integer
+        format: int32
+        example: 2
