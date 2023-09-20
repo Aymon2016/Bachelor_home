@@ -1,5 +1,217 @@
 
+// auth admin
+POST http://localhost:8000/api/v1/auth/signup
+Content-Type: application/json
 
-GET    http://localhost:8000/signup
+{
+    
+    "name": "aymon",
+    "email": "aymon201@gmail.com",
+    "password": "aymon123"
+    
+}
+
+// auth
+###
+POST http://localhost:8000/api/v1/signup
+Content-Type: application/json
+
+{
+    
+    "name": "aymon",
+    "email": "aymon2019@gmail.com",
+    "password": "aymon123"
+    
+}
+
+###
+POST http://localhost:8000/api/v1/signin
+Content-Type: application/json
+
+{
+    "email": "aymon2019@gmail.com",
+    "password": "romon123"
+    
+}
+###
+POST http://localhost:8000/api/v1/signout
+Content-Type: application/json
+headers: Authorization
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MDI5NWQxZjE4NGU2Zjc2ZDYzZWYyMSIsIm5hbWUiOiJheW1vbiIsImVtYWlsIjoiYXltb24yMDE5QGdtYWlsLmNvbSIsInJvbGUiOiJNZW1iZXIiLCJpYXQiOjE2OTQ2NjgyNDEsImV4cCI6MTY5NDY3MTg0MX0.74yuVCscmaT9BqymKNjAMcBpBr9fmfGzbr5dhTs4ZHY
+
+// token
+// letter add this
+###
+
+POST http://localhost:8000/api/v1/refresh_token
+Content-Type: application/json
+
+// members
+###
+
+GET  http://localhost:8000/api/v1/members
+Content-Type: application/json
+###
+
+GET  http://localhost:8000/api/v1/members/64fabcd9dee2326d6e1cd2d4
+Content-Type: application/json
+###
+
+PATCH   http://localhost:8000/api/v1/members/650029f2a04b4b7c04c2930e
+Content-Type: application/json
+
+{
+    "name":"aymon" 
+}
+###
+
+DELETE http://localhost:8000/api/v1/members/64fab2d1817fa152d0f03e7c
+Content-Type: application/json
+
+// letter add this
+###
+
+PATCH  http://localhost:8000/api/v1/members/change_password
+Content-Type: application/json
+
+{
+    
+    "email": "aymon2019@gmail.com",
+    "currentPassword": "aymon123",
+    "newPassword":"romon123"
+    
+}
+
+// accounts
+###
+
+POST   http://localhost:8000/api/v1/transections/members/64fabcd9dee2326d6e1cd2d4
+Content-Type: application/json
+
+{
+    "deposit_amount":"200"
+}
+###
+
+PATCH    http://localhost:8000/api/v1/transections/64fe98e1b55cc3acb320841f
+Content-Type: application/json
+
+{
+    "deposit_amount":"400"
+}
+###
+
+GET   http://localhost:8000/api/v1/transections/members/64fabcd9dee2326d6e1cd2d4
+Content-Type: application/json
+
+###
+
+GET   http://localhost:8000/api/v1/transections/64fe98e1b55cc3acb320841f
+Content-Type: application/json
+
+// Meals
+###
+POST http://localhost:8000/api/v1/meals
+Content-Type: application/json
+
+{
+   "member_id":"64fabcd9dee2326d6e1cd2d4",
+   "date":"3",
+   "type":"lunch",
+   "price": "2990",
+   "description":"hello bro"
+    
+}
+###
+PATCH  http://localhost:8000/api/v1/meals/64fd517898bb1ee77ef8b7e0
+Content-Type: application/json
+
+{
+   "type":"lunch",
+   "price": "2990",
+   "description":"hello bro"
+    
+}
+###
+DELETE  http://localhost:8000/api/v1/meals/64fd5ce3e1a4409c82caabfb
+Content-Type: application/json
+###
+GET  http://localhost:8000/api/v1/meals
+Content-Type: application/json
+
+###
+GET  http://localhost:8000/api/v1/meals/64fd517898bb1ee77ef8b7e0
+Content-Type: application/json
+###
+GET  http://localhost:8000/api/v1/members/64fabcd9dee2326d6e1cd2d4/meals
+Content-Type: application/json
+
+// Products
+###
+POST http://localhost:8000/api/v1/products
+Content-Type: application/json
+
+{
+   "name":"rice",
+   "price": "2990",
+   "description":"hello bro"
+    
+}
+###
+PATCH  http://localhost:8000/api/v1/products/64fd6cef05820a924969bd45
+Content-Type: application/json
+
+{
+    "name":"begon",
+     "price": "2990",
+   "description":"hello bro"
+    
+}
+###
+DELETE  http://localhost:8000/api/v1/products/64fd6cef05820a924969bd45
+Content-Type: application/json
+###
+GET  http://localhost:8000/api/v1/products
+Content-Type: application/json
+###
+GET  http://localhost:8000/api/v1/products/64fd6cef05820a924969bd45
+Content-Type: application/json
 
 
+// notices
+###
+POST http://localhost:8000/api/v1/notices
+Content-Type: application/json
+
+{
+   
+    "title":"gas is finished",
+    "body":"notices body"
+    
+}
+###
+PATCH  http://localhost:8000/api/v1/notices/64fd843792634650b96565b5
+Content-Type: application/json
+
+{
+    
+    "title":"mamer taka dite hobe",
+    "body":"notices body"
+}
+###
+DELETE  http://localhost:8000/api/v1/notices/64fd843792634650b96565b5
+Content-Type: application/json
+###
+GET  http://localhost:8000/api/v1/notices
+Content-Type: application/json
+###
+GET  http://localhost:8000/api/v1/notices/64fd843792634650b96565b5
+Content-Type: application/json
+
+// reports
+###
+GET  http://localhost:8000/api/v1/monthly_reports/members/64fabcd9dee2326d6e1cd2d4
+Content-Type: application/json
+###
+GET  http://localhost:8000/api/v1/monthly_reports
+Content-Type: application/json

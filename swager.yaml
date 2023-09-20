@@ -24,8 +24,8 @@ tags:
     description: Members Endpoint
   - name: Meals
     description: Meals endpoint
-  - name: Account
-    description: Account deposite Endpoint
+  - name: Transections
+    description: transections deposite Endpoint
   - name: Products
     description:  Products Endpoint
   - name: Notice
@@ -35,13 +35,13 @@ tags:
 security:
   - ApiKeyAuth: []
 paths:
-  '/signup':
+  '/api/v1/signup':
     post:
       description: create a new member
       tags: [Auth]
       requestBody:
         content:
-          'aplication/json':
+          'application/json':
             schema:
               type: object
               properties:
@@ -49,10 +49,10 @@ paths:
                   type: string
                   example: mohammdad aymon
                 email:
-                  type: object
+                  type: string
                   example: mdaiman2016@gmail.com
                 password:
-                  type: object
+                  type: string
                   example: password123
               required: [name,email,password]
       responses:
@@ -111,7 +111,7 @@ paths:
           $ref: '#/components/responses/403'
         "500":
           $ref: '#/components/responses/500'
-  '/signin':
+  '/api/v1/signin':
     post:
       description:  Signin to existing member
       tags: [Auth]
@@ -121,13 +121,13 @@ paths:
             schema:
               type: object
               properties:
-                name:
-                  type: string
-                  example: mohammdad aymon
                 email:
-                  type: object
+                  type: string
                   example: mdaiman2016@gmail.com
-              required: [name,email]
+                password:
+                  type: string
+                  example:  aymon123
+              required: [email,password]
       responses:
         '200':
           description: signin successfull
@@ -143,6 +143,21 @@ paths:
                   message:
                     type: string
                     example: singin successful
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: member_id1111
+                      name:
+                        type: string
+                        example: aymon
+                      email:
+                        type: string
+                        example: mdaiman201@gmail.com
+                      role:
+                        type: string
+                        example: Member
                   token_data:
                     type: object
                     properties:
@@ -165,7 +180,7 @@ paths:
           $ref: '#/components/responses/400'
         "500":
           $ref: '#/components/responses/500'
-  '/signout':
+  '/api/v1/signout':
     post:
       description:  Signout to existing account
       tags: [Auth]
@@ -190,13 +205,13 @@ paths:
           $ref: '#/components/responses/404'
         "500":
           $ref: '#/components/responses/500'
-  '/auth/signup':
+  '/api/v1/auth/signup':
     post:
       description: create a new member
       tags: [Admin Auth]
       requestBody:
         content:
-          'aplication/json':
+          'application/json':
             schema:
               type: object
               properties:
@@ -204,10 +219,10 @@ paths:
                   type: string
                   example: mohammdad aymon
                 email:
-                  type: object
+                  type: string
                   example: mdaiman2016@gmail.com
                 password:
-                  type: object
+                  type: string
                   example: password123
               required: [name,email,password]
       responses:
@@ -266,7 +281,7 @@ paths:
           $ref: '#/components/responses/403'
         "500":
           $ref: '#/components/responses/500'
-  '/refresh_token':
+  '/api/v1/refresh_token':
     post:
       description:  Create access token
       tags: [Token]
@@ -313,7 +328,7 @@ paths:
           $ref: '#/components/responses/401'
         '404':
            $ref: '#/components/responses/404'
-  '/members':
+  '/api/v1/members':
     get:
       description:  Get all members
       tags: [Members]
@@ -378,7 +393,7 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
-  '/members/{member_id}':
+  '/api/v1/members/{member_id}':
     get:
       description:  Get a single member
       tags: [Members]
@@ -388,7 +403,7 @@ paths:
           required: true
           description: The ID of the member to retrieve.
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description:  Get single Members
@@ -436,10 +451,10 @@ paths:
           required: true
           description: The ID of the member to retrieve.
           schema:
-            type: integer
+            type: string
       requestBody:
         content:
-          'aplication/json':
+          'application/json':
             schema:
               type: object
               properties:
@@ -447,9 +462,8 @@ paths:
                   type: string
                   example: mohammdad aymon
                 email:
-                  type: object
+                  type: string
                   example: mdaiman2016@gmail.com
-              required: [name,email]
       responses:
         '200':
           description:  Update a single member
@@ -466,24 +480,22 @@ paths:
                     type: string
                     example:  Member updated successfully
                   data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example:  memeber233
-                        name:
-                          type: string
-                          example:  aymon
-                        email:
-                          type: string
-                          example:   mdaiman2@gmail.com
-                        role:
-                          type: string
-                          example:  member
-                        timestamp:
-                          $ref: '#/components/schemas/Timestamp'
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example:  memeber233
+                      name:
+                        type: string
+                        example:  aymon
+                      email:
+                        type: string
+                        example:   mdaiman2@gmail.com
+                      role:
+                        type: string
+                        example:  member
+                      timestamp:
+                        $ref: '#/components/schemas/Timestamp'
         '404':
           $ref: '#/components/responses/404'
         '400':
@@ -501,7 +513,7 @@ paths:
           required: true
           description: The ID of the member to retrieve.
           schema:
-            type: integer
+            type: string
       responses:
         '204':
           description: Delete sucessfull
@@ -523,7 +535,7 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
-  '/members/{member_id}/password':
+  '/api/v1/members/{member_id}/change_password':
     patch:
       description: Change password
       tags: [Members]
@@ -533,16 +545,22 @@ paths:
           required: true
           description: The ID of the member to change password.
           schema:
-            type: integer
+            type: string
       requestBody:
         content:
           'application/json':
             schema:
               type: object
               properties:
-                password:
+                email:
                   type: string
-                  example: 34049kij
+                  example: mdaiman2014@gmail.com
+                currentPassword:
+                  type: string
+                  example:  123456
+                newPassword:
+                  type: string
+                  example: 223366
       responses:
         '200':
           description:  Changed password
@@ -564,24 +582,24 @@ paths:
           $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
-  '/accounts/{member_id}/deposite':
-    patch:
+  '/api/v1/transections/members/{member_id}':
+    post:
       description: Deposite money in member account
-      tags: [Account]
+      tags: [Transections]
       parameters:
         - in: path
           name: member_id
           required: true
           description: The ID of the member to a account.
           schema:
-            type: integer
+            type: string
       requestBody:
         content:
           'application/json':
             schema:
               type: object
               properties:
-                amount:
+                deposit_amount:
                   type: integer
                   example: 2000
       responses:
@@ -605,10 +623,9 @@ paths:
                   data:
                     type: object
                     properties:
-                      total_deposite:
-                        type: integer
-                        format: int32
-                        example:  2000
+                      id:
+                        type: string
+                        example:  hvojd499494
                       deposite_amount:
                         type: integer
                         format: int32
@@ -618,24 +635,23 @@ paths:
                     properties:
                       self: 
                         type: string
-                        example: '/accounts/:member_id'
+                        example: 'transections/id'
         '404':
           $ref: '#/components/responses/404'
         '401':
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
-  '/accounts/{member_id}':
-    patch:
+    get:
       description: Get details of a member
-      tags: [Account]
+      tags: [Transections]
       parameters:
         - in: path
           name: member_id
           required: true
           description: The ID of the member to a account.
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Account retrived sucessfull
@@ -654,10 +670,26 @@ paths:
                   member_id:
                     type: string
                     example:  membrid234
-                  total_deposite:
-                    type: integer
-                    format: int32
-                    example:  40005
+                  data: 
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: uihhjj34
+                        member_id:  
+                          type: string
+                          example: meemerid234
+                        deposite_amount:
+                          type: number  
+                          example: 4200
+                        createdAt:
+                          type: string
+                          format: date-time
+                        updatedAt:
+                          type: string
+                          format: date-time
                   links:
                     type: object
                     properties:
@@ -668,7 +700,120 @@ paths:
           $ref: '#/components/responses/404'
         '401':
           $ref: '#/components/responses/401'
-  '/meals':
+  '/api/v1/transections/{id}':
+    get:
+      description: Get details of a single transections
+      tags: [Transections]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the transections.
+          schema:
+            type: string
+      responses:
+        '201':
+          description: single transection found sucessfull
+          content:
+            'application/josn':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  200
+                  message:
+                    type: string
+                    example: Transection retrived sucessfull
+                  member_id:
+                    type: string
+                    example:  membrid234
+                  data: 
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: uihhjj34
+                      deposite_amount:
+                        type: number  
+                        example: 4200
+                      timestamp:
+                        $ref: '#/components/schemas/Timestamp'
+                  links:
+                    type: object
+                    properties:
+                      self: 
+                        type: string
+                        example: '/accounts/:member_id'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+    patch:
+      description: update a single transections
+      tags: [Transections]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the transection
+          schema:
+            type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                deposit_amount:
+                  type: integer
+                  example: 2000
+      responses:
+        '201':
+          description: Transection updated sucessfull
+          content:
+            'application/josn':
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                    example:  200
+                  message:
+                    type: string
+                    example: Transection updated sucessfull
+                  data: 
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: uihhjj34
+                      member_id:  
+                        type: string
+                        example: meemerid234
+                      deposite_amount:
+                        type: number  
+                        example: 4200
+                      createdAt:
+                        type: string
+                        format: date-time
+                      updatedAt:
+                        type: string
+                        format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self: 
+                        type: string
+                        example: '/transections/:id'
+        '404':
+          $ref: '#/components/responses/404'
+        '401':
+          $ref: '#/components/responses/401'
+
+  '/api/v1/meals':
     post:
       description:  Create a single mel
       tags: [Meals]
@@ -815,7 +960,7 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
-  '/meals/{id}':
+  '/api/v1/meals/{id}':
     patch:
       description:  Update a single meal
       tags: [Meals]
@@ -825,7 +970,7 @@ paths:
           required: true
           description: The id of the meals to retrieve.
           schema:
-            type: integer
+            type: string
       requestBody:
         content:
           'application/json':
@@ -840,8 +985,7 @@ paths:
                   example:  50
                 description:  
                   type: string
-                  example:  this a description about this meals
-              required: [member_id,type,price]    
+                  example:  this a description about this meals   
       responses:
         '201':
           description: Update a single meals successfull
@@ -901,7 +1045,7 @@ paths:
           required: true
           description: The id of the meals to retrieve.
           schema:
-            type: integer 
+            type: string
       responses:
         '204':
           description: Delete sucessfull
@@ -932,7 +1076,7 @@ paths:
           required: true
           description: The ID of the meal to retrieve.
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description:  Get single meals
@@ -983,7 +1127,7 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
-  '/meals/{member_id}':
+  '/api/v1/members/{member_id}/meals':
      get:
       description:  Get all meals of the given member_id
       tags: [Meals]
@@ -993,12 +1137,11 @@ paths:
           required: true
           description: The ID of the member to retrieve meals.
           schema:
-            type: integer
+            type: string
         - $ref: '#/components/parameters/pagePram'
         - $ref: '#/components/parameters/limitPram'
         - $ref: '#/components/parameters/sortTypeParam'
         - $ref: '#/components/parameters/sortByParam'
-        - $ref: '#/components/parameters/searchParam'
       responses:
         '200':
           description:  Get all meals of given member_id
@@ -1059,7 +1202,7 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403'
-  '/products':
+  '/api/v1/products':
     post:
       description: Create a single product
       tags: [Products]
@@ -1188,7 +1331,7 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
-  '/products/{id}':
+  '/api/v1/products/{id}':
     get:
       description:  Get a single product
       tags: [Products]
@@ -1198,7 +1341,7 @@ paths:
           required: true
           description: The ID of the products to retrieve product.
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description:  Get single product
@@ -1252,7 +1395,7 @@ paths:
           required: true
           description: The id of the products to retrieve product.
           schema:
-            type: integer
+            type: string
       requestBody:
         content:
           'application/json':
@@ -1321,7 +1464,7 @@ paths:
           required: true
           description: The id of the products to retrieve product.
           schema:
-            type: integer
+            type: string
       responses:
         '204':
           description: Delete sucessfull
@@ -1343,7 +1486,7 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403' 
-  '/notices':
+  '/api/v1/notices':
     post:
       description: Create a single notice
       tags: [Notice]
@@ -1464,7 +1607,7 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
-  '/notices/{id}':
+  '/api/v1/notices/{id}':
     get:
       description:  Get a single notice
       tags: [Notice]
@@ -1474,7 +1617,7 @@ paths:
           required: true
           description: The ID of the noticess to retrieve notice.
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description:  Get single Notice
@@ -1525,7 +1668,7 @@ paths:
           required: true
           description: The id of the notice to retrieve notice.
           schema:
-            type: integer
+            type: string
       requestBody:
         content:
           'application/json':
@@ -1588,7 +1731,7 @@ paths:
           required: true
           description: The id of the notices to retrieve notice.
           schema:
-            type: integer
+            type: string
       responses:
         '204':
           description: Delete sucessfull
@@ -1610,101 +1753,7 @@ paths:
           $ref: '#/components/responses/401'
         '403':
           $ref: '#/components/responses/403' 
-  '/monthly_reports/members':
-    get:
-      description:  Get monthly report of all member
-      tags: [Reports]
-      parameters:
-        - $ref: '#/components/parameters/pagePram'
-        - $ref: '#/components/parameters/limitPram'
-        - $ref: '#/components/parameters/sortTypeParam'
-        - $ref: '#/components/parameters/sortByParam'
-        - $ref: '#/components/parameters/Month'
-        
-      responses:
-        '200':
-          description:  Get reports of all members
-          content:
-            'applicatin/json':
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                    format: int32
-                    example: 200
-                  message:
-                    type: string
-                    example: Reports retrieved successfully
-                  month:
-                    type: integer
-                    format: int32
-                    example:  2
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example:  i3943
-                        name:
-                          type: string
-                          example:  aymon
-                        email:
-                          type: string
-                          example:  mdaiman2015@gamil.com
-                        meal_summary:
-                          type: object
-                          properties:
-                            meals_consumed:
-                              type: number
-                              example:  50
-                            meals_cost:
-                              type: number
-                              example:  2500
-                        account_summary:
-                          type: object
-                          properties:
-                            total_cost:
-                              type: number
-                              example:  5000
-                            due:
-                              type: number
-                              example:  2500
-                            return:
-                              type: number
-                              example: 2500
-                        links:
-                          type: object
-                          properties:
-                            all_meals:
-                              type: string
-                              example:  '/meals/{member_id}'
-                            self_report:
-                              type: string
-                              example:  '/reports/members/{member_id}'
-                  pagination:
-                    $ref: '#/components/schemas/Pagination'
-                  links:
-                    type: object
-                    properties:
-                      self:
-                        type: string
-                        example: '/products'
-                      next_page:
-                        type: string
-                        example: '/products?next_page=3'
-                      prev_page:
-                        type: string
-                        example: '/products?prev_pag=2'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '500':
-          $ref: '#/components/responses/500'
-  '/monthly_reports/members/{member_id}':
+  '/api/v1/monthly_reports/members/{member_id}':
     get:
       description:  Get monthly report of all member
       tags: [Reports]
@@ -1714,7 +1763,7 @@ paths:
           required: true
           description: The id of the notices to retrieve notice.
           schema:
-            type: integer
+            type: string
         - $ref: '#/components/parameters/Month'
         
       responses:
@@ -1796,7 +1845,7 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
-  '/monthly_reports':
+  '/api/v1/monthly_reports':
     get:
       description:  Get monthly report of a hole month
       tags: [Reports]
@@ -1909,7 +1958,7 @@ components:
                           example: Invalid email
                         in:
                           type: string
-                          enum: [query, body]
+                          enum: [query]
                           example: body
     "401":
           description: Authentication Errors

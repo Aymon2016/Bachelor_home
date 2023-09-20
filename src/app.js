@@ -12,10 +12,10 @@ swagger_doc(app)
 app.use([morgan('dev'), cors(), express.json()]);
 app.use(routes)
 
-app.get('/helth', (req, res) => {
-    console.log('calling')
+app.get('/health', (req, res) => {
 
-    res.status(200).json({ message: 'helth route is ok' })
+
+    res.status(200).json({ message: 'Health is ok' })
 })
 
 app.use('*', (req, res, next) => {
@@ -26,6 +26,7 @@ app.use('*', (req, res, next) => {
     next(error)
 })
 app.use((err, req, res, next) => {
+    console.log(err)
     res.status(err.status || 500).json({
         message: err.message,
         errors: err.errors,
