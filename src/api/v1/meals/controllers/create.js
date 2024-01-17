@@ -6,11 +6,11 @@ const createMeal = async (req, res, next) => {
 
 
     try {
-        const { isValid, error } = validator.createMeal(member_id, date, type, price, description)
-        if (!isValid) {
-            throw BadRequest("Bad Request")
+        // const { isValid} = validator.createMeal(member_id, date, type, price, description)
+        // if (!isValid) {
+        //     throw BadRequest("Bad Request")
 
-        }
+        // }
         const newMeal = await mealsServices.create({ member_id, date, type, price, description });
         const response = {
             code: 201,

@@ -9,11 +9,11 @@ const signup = async (req, res, next) => {
 
     try {
 
-        const { isValid, error } = validator.singup(name, email, password)
-        if (!isValid) {
-            throw BadRequest("Bad Request")
+        // const { isValid, error } = validator.singup(name, email, password)
+        // if (!isValid) {
+        //     throw BadRequest("Bad Request")
 
-        }
+        // }
 
         const member = await adminAuthService.register({ name, email, password });
 

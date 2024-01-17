@@ -5,11 +5,14 @@ const createMeal = require('../../src/api/v1/meals/controllers/create')
 const { create } = require('../../src/lib/meals/index');
 
 
+
 jest.mock('../../src/lib/meals/index');
+
+jest.mock('../../src/validation/meal/create');
 
 const req = {
     body: {
-        member_id: '123',
+        member_id: '64fabcd9dee2326d6e1cd2d4',
         date: '2023-09-14',
         type: 'Breakfast',
         price: 10.0,
@@ -33,8 +36,8 @@ describe('Create meal controller', () => {
 
     create.mockResolvedValue({
 
-        _id: 'mocked-id',
-        member_id: '123',
+        _id: '64fabcd9dee2326d6e1cd2d4',
+        member_id: '64fabcd9dee2326d6e1cd2d4',
         date: '2023-09-14',
         type: 'Breakfast',
         price: 10.0,
@@ -43,11 +46,14 @@ describe('Create meal controller', () => {
         updatedAt: "2023 -09 - 12"
 
     })
+
+
+
     it('should create and return a response', async () => {
         await createMeal(req, res, next);
 
         expect(create).toHaveBeenCalledWith({
-            member_id: '123',
+            member_id: '64fabcd9dee2326d6e1cd2d4',
             date: '2023-09-14',
             type: 'Breakfast',
             price: 10.0,
@@ -58,8 +64,8 @@ describe('Create meal controller', () => {
             code: 201,
             message: "Create meals successfull",
             data: {
-                id: 'mocked-id',
-                member_id: '123',
+                id: '64fabcd9dee2326d6e1cd2d4',
+                member_id: '64fabcd9dee2326d6e1cd2d4',
                 date: '2023-09-14',
                 type: 'Breakfast',
                 price: 10.0,
@@ -82,7 +88,7 @@ describe('Create meal controller', () => {
         await createMeal(req, res, next);
 
         expect(create).toHaveBeenCalledWith({
-            member_id: '123',
+            member_id: '64fabcd9dee2326d6e1cd2d4',
             date: '2023-09-14',
             type: 'Breakfast',
             price: 10.0,

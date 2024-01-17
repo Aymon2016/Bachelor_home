@@ -9,11 +9,11 @@ const create = async (req, res, next) => {
 
     try {
 
-        const { isValid, error } = validator.createProduct(name, price, description)
-        if (!isValid) {
-            throw BadRequest("Bad Request")
+        // const { isValid, error } = validator.createProduct(name, price, description)
+        // if (!isValid) {
+        //     throw BadRequest("Bad Request")
 
-        }
+        // }
         const product = await productsServices.create({ name, price, description });
 
         const response = {

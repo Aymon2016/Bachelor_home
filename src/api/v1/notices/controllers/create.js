@@ -9,10 +9,10 @@ const create = async (req, res, next) => {
 
     try {
 
-        const { isValid, error } = validator.createNotice(title, body)
-        if (!isValid) {
-            throw BadRequest("Bad Request")
-        }
+        // const { isValid, error } = validator.createNotice(title, body)
+        // if (!isValid) {
+        //     throw BadRequest("Bad Request")
+        // }
 
         const notice = await noticesServices.create({ title, body });
 

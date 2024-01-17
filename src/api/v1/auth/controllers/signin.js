@@ -7,11 +7,11 @@ const signin = async (req, res, next) => {
 
     try {
 
-        const { isValid, error } = validator.singIn(email, password)
+        // const { isValid, error } = validator.singIn(email, password)
 
-        if (!isValid) {
-            throw BadRequest("Bad Request")
-        }
+        // if (!isValid) {
+        //     throw BadRequest("Bad Request")
+        // }
         const member = await authService.login({ email, password });
 
 

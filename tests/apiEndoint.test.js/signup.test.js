@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const request = require('supertest');
 const app = require('../../src/app');
+const Member = require('../../src/model/Member')
 let db;
 let mongoServer;
 
@@ -13,11 +14,11 @@ beforeAll(async () => {
 
     await mongoose.connect(mongoUri, {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
-        connectTimeoutMS: 10000
+        useUnifiedTopology: true
     });
 
     db = mongoose.connection;
+
 
 
 });
@@ -30,10 +31,12 @@ afterAll(async () => {
 
 
 describe('signup Endpoints', () => {
+
     const customHeaders = {
         'Content-Type': 'application/json'
     }
     it('should create a new resource', async () => {
+
         const res = await request(app)
             .post('/api/v1/auth/signup')
             .set('Authorization', 'Bearer yourAccessToken')
@@ -48,3 +51,4 @@ describe('signup Endpoints', () => {
     });
 
 });
+

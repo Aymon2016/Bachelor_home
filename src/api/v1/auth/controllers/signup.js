@@ -8,11 +8,11 @@ const signup = async (req, res, next) => {
     const { name, email, password } = req.body;
 
     try {
-        const { isValid, error } = validator.singup(name, email, password)
-        if (!isValid) {
-            throw BadRequest("Bad Request")
+        // const { isValid, error } = validator.singup(name, email, password)
+        // if (!isValid) {
+        //     throw BadRequest("Bad Request")
 
-        }
+        // }
         const member = await authService.register({ name, email, password });
 
 
